@@ -10,16 +10,16 @@
 <?php include ("header.php"); ?>
 
 <?php
-//make the query
+
 $q ="SELECT ID_P, FirstName_P, LastName_P, InsuranceNumber, Diagnose FROM pesakit ORDER BY ID_P";
 
-//run the query
+
 $result = @mysqli_query ($connect, $q);
 
-//if it ran without a problem, display the records
+
 if($result)
 {
-	//Table heading
+	
 	echo '<table border="2">
 	<tr><td><b>Edit</b></td>
 	<td><b>Delete</b></td>
@@ -29,7 +29,7 @@ if($result)
 	<td><b>Insurance Number</b></td>
 	<td><b>Diagnose</b></td>';
 
-	//Fetch and print all the records
+	
 	while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
 		echo '<tr>
 		<td><a href = "edit_pesakit.php?id=' .$row['ID_P'].'">Edit</a></td>
@@ -41,22 +41,21 @@ if($result)
 	    <td>' .$row ['Diagnose']. '</td>
 	    </tr>';
 	}
-	//Close the table
+	
     echo '</table>';
 
-    //free up the resources
+  
     mysqli_free_result ($result);
 
-//if failed to run
+
 } else {
 
-	//error message 
+	
 	echo '<p class ="error">?The current student could not be retrieved. We apologise for any inconvenience.</p>';
 
-	//debugging message 
+	
 	echo '<p>' .mysqli_error($connect). '<br><br/>Query: ' .$q.'</p>';
-}//end of if ($result)
-//close the database connection
+}
 mysqli_close($connect);
 ?>
 
