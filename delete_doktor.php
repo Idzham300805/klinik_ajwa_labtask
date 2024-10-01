@@ -11,7 +11,7 @@
 <h2> Delete a record </h2>
 
 <?php
-// Look for a valid user id, either through GET or POST
+
 if ((isset($_GET['id'])) && (is_numeric($_GET['id']))) {
     $id = $_GET['id'];
 } elseif ((isset($_POST['id'])) && (is_numeric($_POST['id']))) {
@@ -22,33 +22,30 @@ if ((isset($_GET['id'])) && (is_numeric($_GET['id']))) {
 }
 
 if($_SERVER ['REQUEST_METHOD'] =='POST') {
-	if ($_POST['sure'] == 'Yes') {// Delete the record
-	//make the query
+	if ($_POST['sure'] == 'Yes') {
 	$q = "DELETE FROM doktor WHERE ID=$id LIMIT 1";
 	$result = @mysqli_query ($connect, $q);
 
-	if(mysqli_affected_rows($connect) == 1) { //if there was no problem
-	//display the message
+	if(mysqli_affected_rows($connect) == 1) {
 	echo '<h3> The record has been deleted.</h3>';
 	} else {
-		//display error message
+		
 		echo '<p class="error">The record could not be deleted.<br>Probably because it does not exist or due to system error. </p>';
 
 		echo '<p>' .mysqli_error($connect).'<br/>Query:'.$q.'</p>';
-		//debugging message
+		
 	}
 	}
 	else {
 		echo '<h3>The user has NOT been deleted.</h3>';
 	}
 }else {
-	//display the error
-	//Retrieve the doctor's data
+	
 	$q ="SELECT FIrstName FROM doktor WHERE ID = $id";
 	$result = @mysqli_query ($connect, $q);
 
 	if(mysqli_num_rows($result) == 1) {
-		//Get the doctor's data
+		
 		$row =mysqli_fetch_array($result, MYSQLI_NUM);
 		echo "<h3>Are you sure want to permanently delete $row[0]? </h3>";
 		echo '<form action="delete_doktor.php" method="post">
