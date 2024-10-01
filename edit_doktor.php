@@ -12,7 +12,7 @@
 <h2> Edit a record </h2>
 
 <?php
-// Look for a valid user id, either through GET or POST
+
 if ((isset($_GET['id'])) && (is_numeric($_GET['id']))) {
     $id = $_GET['id'];
 } elseif ((isset($_POST['id'])) && (is_numeric($_POST['id']))) {
@@ -25,35 +25,35 @@ if ((isset($_GET['id'])) && (is_numeric($_GET['id']))) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $error = array(); 
 
-    // Look for FirstName
+    
     if (empty($_POST['FirstName'])) {
         $error[] = 'You forgot to enter the First Name.';
     } else {
         $n = mysqli_real_escape_string($connect, trim($_POST['FirstName']));
     }
 
-    // Look for LastName
+    
     if (empty($_POST['LastName'])) {
         $error[] = 'You forgot to enter the Last Name.';
     } else {
         $l = mysqli_real_escape_string($connect, trim($_POST['LastName']));
     }
 
-    // Look for Soecialization
+   
     if (empty($_POST['Specialization'])) {
         $error[] = 'You forgot to enter the Specialization.';
     } else {
         $s = mysqli_real_escape_string($connect, trim($_POST['Specialization']));
     }
 
-    // Look for Password
+    
     if (empty($_POST['Password'])) {
         $error[] = 'You forgot to enter the Diagnose.';
     } else {
         $p = mysqli_real_escape_string($connect, trim($_POST['Password']));
     }
 
-    // If no problems occurred
+    
     if (empty($error)) {
         $q = "SELECT ID FROM doktor WHERE Specialization ='$s' AND ID != $id";
         $result = @mysqli_query($connect, $q);
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo '<p class="error">The no ic has already been registered.</p>';
         }
     } else {
-        // Display the errors
+        
         echo '<p class="error">The following error(s) occurred:<br/>';
         foreach ($error as $msg) {
             echo " - $msg<br/>\n";
@@ -81,15 +81,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-// Query to retrieve user information
+
 $q = "SELECT FirstName, LastName, Specialization, Password FROM doktor WHERE ID=$id";
 $result = @mysqli_query($connect, $q);
 
 if (mysqli_num_rows($result) == 1) {
-    // Get patient information
+    
     $row = mysqli_fetch_array($result, MYSQLI_NUM);
 
-    // Create the form
+    
     echo '<form action="edit_doktor.php" method="post">
         <p><label class="label" for="FirstName">First Name:</label>
         <input id="FirstName" type="text" name="FirstName" size="30" maxlength="30" value="' . $row[0] . '"></p>
