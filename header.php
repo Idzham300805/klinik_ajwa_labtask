@@ -8,9 +8,7 @@
 <body>
 
 <?php
-//extract($_POST);
 
-//connect to server
 $connect = mysqli_connect ("localhost", "root", "", "klinik_ajwa");
 
 if(!$connect){
